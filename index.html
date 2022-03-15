@@ -1,1 +1,32 @@
-<h1>First page</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Http POST Caller</title>
+</head>
+<body>
+    <script>
+        document.body.onload = makePostRequest;
+
+        function makePostRequest() {
+            const params = new Proxy(new URLSearchParams(window.location.search), {
+                get: (searchParams, prop) => searchParams.get(prop),
+            });
+
+            try {
+                const url = decodeURIComponent(escape(window.atob( params.url )));
+
+                const form = document.createElement("form");
+                form.name = "wrapper";
+                form.method = "POST";
+                form.action = url;
+
+                document.body.append(form);
+                document.forms["wrapper"].submit();
+            } catch (error) {
+                console.error(error);
+                alert("Query param 'url' must be in the base64 format")
+            }
+        }
+    </script>
+</body>
+</html>
