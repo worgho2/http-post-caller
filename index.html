@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Http POST Caller</title>
+    <title>Test</title>
 </head>
 <body>
     <script>
@@ -11,6 +11,14 @@
             const params = new Proxy(new URLSearchParams(window.location.search), {
                 get: (searchParams, prop) => searchParams.get(prop),
             });
+
+            console.log(params.error)
+            if (params.error !== null) {
+                const h1 = document.createElement("h1");
+                h1.textContent = 'Failed to create link :\'(';
+                document.body.append(h1);
+                return;
+            }
 
             try {
                 const url = decodeURIComponent(escape(window.atob( params.url )));
